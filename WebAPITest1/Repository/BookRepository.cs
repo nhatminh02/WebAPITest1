@@ -24,7 +24,7 @@ namespace WebAPITest1.Repository
         public async Task Delete(int id)
         {
             var book = await context.Books.FindAsync(id);
-            if(book != null)
+            if (book != null)
             {
                 context.Books.Remove(book);
                 //await context.SaveChangesAsync();
@@ -33,16 +33,16 @@ namespace WebAPITest1.Repository
 
         public async Task<IEnumerable<BookDTO>> GetAll()
         {
-            var books = await(from book in context.Books
-                              join author in context.Authors
-                              on book.AuthorId equals author.Id
-                              select new Book
-                              {
-                                  Id = book.Id,
-                                  Title = book.Title,
-                                  Description = book.Description,
-                                  AuthorId = book.AuthorId
-                              }).ToArrayAsync();
+            var books = await (from book in context.Books
+                               join author in context.Authors
+                               on book.AuthorId equals author.Id
+                               select new Book
+                               {
+                                   Id = book.Id,
+                                   Title = book.Title,
+                                   Description = book.Description,
+                                   AuthorId = book.AuthorId
+                               }).ToArrayAsync();
 
             return mapper.Map<IEnumerable<BookDTO>>(books);
         }
@@ -67,7 +67,8 @@ namespace WebAPITest1.Repository
         public async Task Put(int id, BookDTO entity)
         {
             var book = await context.Books.FindAsync(id);
-            if ( book != null ) { 
+            if (book != null)
+            {
                 book.Title = entity.Title;
                 book.Description = entity.Description;
                 book.AuthorId = entity.AuthorId;
@@ -77,7 +78,7 @@ namespace WebAPITest1.Repository
         public async Task Patch(int id, JsonPatchDocument entity)
         {
             var book = await context.Books.FindAsync(id);
-            if ( book != null )
+            if (book != null)
             {
                 entity.ApplyTo(book);
             }
